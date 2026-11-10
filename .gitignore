@@ -1,0 +1,78 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+
+# SQLite Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated Audio Files
+generated_audio/*
+!generated_audio/.gitkeep
+
+# Unit test / coverage reports
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editor / OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Test audios and logs
+*.mp3
+*.wav
+!generated_audio/.gitkeep
+*.log
+
+# Backups and temporary test directories
+*.bak
+backups_btech_demo/
+backups_final_stabilization/
+scratch_audio_test/
+test_verify_audio_output/
+scratch/
+

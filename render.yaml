@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: podcast-buddy
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: chmod +x build.sh && ./build.sh
+    startCommand: gunicorn -c gunicorn.conf.py wsgi:app
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: FLASK_DEBUG
+        value: "False"
+      - key: SERPAPI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SARVAM_API_KEY
+        sync: false
+

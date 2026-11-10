@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Podcast Buddy – AI-Powered Podcast & News Discovery Assistant. Turn the latest news into an engaging conversational podcast.">
+  <title>Podcast Buddy – AI-Powered Podcast &amp; News Discovery Assistant</title>
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/css/style.css?v=20261029_portfolio">
+</head>
+<body>
+  <!-- Ambient background lighting elements -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+  <div class="ambient-glow glow-3" aria-hidden="true"></div>
+
+  <!-- Global Application Wrapper -->
+  <div class="app-layout">
+    
+    <!-- 1. NAVBAR -->
+    <header class="navbar" id="navbar">
+      <div class="nav-container">
+        <a href="#home" class="nav-brand" aria-label="Podcast Buddy Home">
+          <div class="logo-wrapper">
+            <svg class="logo-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="22"></line>
+            </svg>
+          </div>
+          <div class="brand-text-col">
+            <span class="brand-title">Podcast Buddy</span>
+            <span class="brand-badge">B.Tech Major Project</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links: Prioritized User Journey -->
+        <nav class="nav-menu" aria-label="Main Navigation">
+          <a href="#home" class="nav-link active">Home</a>
+          <a href="#how-it-works" class="nav-link">Workflow</a>
+          <a href="#news-results" class="nav-link">Discover News</a>
+          <a href="#podcast-preview" class="nav-link">Audio Studio</a>
+          <a href="#episodes-library" class="nav-link">Saved Episodes</a>
+          <a href="#about" class="nav-link">Architecture &amp; Viva</a>
+        </nav>
+
+        <!-- Navbar Actions: Subtle Status Dot & Diagnostics Link -->
+        <div class="nav-actions">
+          <div id="backend-status-indicator" class="status-indicator-subtle status-pending" title="Backend: Checking..." aria-label="Backend status">
+            <span class="status-dot"></span>
+          </div>
+          <a href="#developer-diagnostics" class="dev-console-link" title="Open Developer Diagnostics">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 17 10 11 4 5"></polyline>
+              <line x1="12" y1="19" x2="20" y2="19"></line>
+            </svg>
+            <span>Diagnostics</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="home">
+      
+      <!-- 2. HERO SECTION -->
+      <section class="hero-section">
+        <div class="hero-badge-container">
+          <span class="pill-badge">
+            <span class="badge-sparkle">✨</span>
+            Final-Year B.Tech Major Project Demonstration
+          </span>
+        </div>
+
+        <h1 class="hero-title">
+          Transform Verified News Into <span class="gradient-text">Conversational Podcasts</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          An end-to-end AI platform integrating real-time SerpAPI discovery, Google Gemini factual grounding, and dual-host neural speech synthesis into studio-grade audio digests.
+        </p>
+
+        <!-- Prominent News Search Box -->
+        <div class="search-box-card">
+          <form id="search-form" class="search-form" role="search" onsubmit="return false;">
+            <div class="search-input-wrapper">
+              <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input 
+                type="text" 
+                id="search-input" 
+                class="search-input" 
+                placeholder="Search real global news by topic, keyword, or organization..." 
+                autocomplete="off"
+                aria-label="Search news topics"
+              />
+              <button type="button" id="search-clear-btn" class="search-clear-btn" aria-label="Clear search input" hidden>
+                &times;
+              </button>
+            </div>
+            <button type="button" id="search-btn" class="btn btn-primary search-btn">
+              <svg class="search-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span id="search-btn-label">Search News</span>
+            </button>
+          </form>
+
+          <!-- Informational Banner (Shows when search is triggered or notices occur) -->
+          <div id="search-info-banner" class="info-banner" hidden role="status" aria-live="polite">
+            <div class="info-banner-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </div>
+            <div class="info-banner-content">
+              <strong id="info-banner-title">Search Notice</strong>
+              <p id="info-banner-message">Search the latest news, generate AI intelligence, and create conversational podcasts.</p>
+            </div>
+            <button type="button" id="info-banner-close" class="banner-close-btn" aria-label="Close message">&times;</button>
+          </div>
+        </div>
+
+        <!-- 3. QUICK TOPICS -->
+        <div class="quick-topics-wrapper">
+          <div class="quick-topics-header">
+            <span class="quick-topics-label">Featured Topics:</span>
+            <span class="quick-topics-hint">Instant live feed retrieval</span>
+          </div>
+          <div class="topics-group" role="group" aria-label="Quick Topics Selection">
+            <button type="button" class="topic-chip" data-topic="Artificial Intelligence">
+              <span class="topic-icon">🤖</span> Artificial Intelligence
+            </button>
+            <button type="button" class="topic-chip" data-topic="Technology">
+              <span class="topic-icon">💻</span> Technology
+            </button>
+            <button type="button" class="topic-chip" data-topic="Science">
+              <span class="topic-icon">🔬</span> Science &amp; Space
+            </button>
+            <button type="button" class="topic-chip" data-topic="Business">
+              <span class="topic-icon">📈</span> Global Business
+            </button>
+            <button type="button" class="topic-chip" data-topic="Sports">
+              <span class="topic-icon">⚽</span> Sports
+            </button>
+            <button type="button" class="topic-chip" data-topic="World News">
+              <span class="topic-icon">🌍</span> World News
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. CORE WORKFLOW PIPELINE (Requirement 1: 5-step user journey) -->
+      <section class="section how-it-works-section" id="how-it-works">
+        <div class="section-header">
+          <span class="section-tag">End-to-End Pipeline</span>
+          <h2 class="section-title">Core Demonstration Workflow</h2>
+          <p class="section-desc">Experience the seamless 5-stage progression from live news discovery to conversational neural audio playback.</p>
+        </div>
+
+        <div class="steps-grid">
+          <!-- Step 1 -->
+          <div class="step-card">
+            <div class="step-indicator">
+              <span class="step-num">01</span>
+              <div class="step-icon-bg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </div>
+            </div>
+            <h3 class="step-title">Discover News</h3>
+            <p class="step-body">
+              Query real-time headlines with SerpAPI news aggregation, verifying publishers and original sources.
+            </p>
+            <div class="step-chip">Live Feed Ingestion</div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-card">
+            <div class="step-indicator">
+              <span class="step-num">02</span>
+              <div class="step-icon-bg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                </svg>
+              </div>
+            </div>
+            <h3 class="step-title">Select Stories</h3>
+            <p class="step-body">
+              Curate and bundle verified news articles into custom episode topics with real-time selection counters.
+            </p>
+            <div class="step-chip">Story Curation</div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-card">
+            <div class="step-indicator">
+              <span class="step-num">03</span>
+              <div class="step-icon-bg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+                </svg>
+              </div>
+            </div>
+            <h3 class="step-title">Generate Podcast</h3>
+            <p class="step-body">
+              Google Gemini generates grounded intelligence and structures a natural multi-speaker script between Host and CoHost.
+            </p>
+            <div class="step-chip">Gemini AI Engine</div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step-card">
+            <div class="step-indicator">
+              <span class="step-num">04</span>
+              <div class="step-icon-bg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+              </div>
+            </div>
+            <h3 class="step-title">Listen in Audio Studio</h3>
+            <p class="step-body">
+              Synthesize regional &amp; multi-accent speech across Odia (Sarvam AI Bulbul v3), Hindi, English, and Hinglish (Edge Neural) with scrubber, volume, and real-time waveform sync.
+            </p>
+            <div class="step-chip">Dual-Speaker Neural TTS</div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="step-card">
+            <div class="step-indicator">
+              <span class="step-num">05</span>
+              <div class="step-icon-bg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                </svg>
+              </div>
+            </div>
+            <h3 class="step-title">View Saved Episodes</h3>
+            <p class="step-body">
+              Persistent SQLite storage retains all created episodes, scripts, audio tracks, and extracted intelligence.
+            </p>
+            <div class="step-chip">SQLite Relational DB</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. NEWS RESULTS SECTION -->
+      <section class="section news-section" id="news-results">
+        <div class="section-header-row">
+          <div>
+            <span class="section-tag">Step 1 &amp; 2: Discovery Feed</span>
+            <h2 class="section-title">Latest Verified News</h2>
+            <p class="section-subtext">Select articles to curate into your custom multi-speaker podcast episode.</p>
+          </div>
+          <div class="news-header-actions">
+            <!-- Article Selection Counter -->
+            <div id="selection-counter-badge" class="selection-counter-badge" hidden aria-live="polite">
+              <span class="selection-counter-icon">✓</span>
+              <span id="selection-counter-text">0 stories selected</span>
+            </div>
+            <!-- Create Podcast Action -->
+            <button type="button" id="btn-create-podcast" class="btn btn-primary btn-sm create-podcast-btn" disabled title="Select one or more articles to create a podcast">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+              <span id="btn-create-podcast-text">Create Podcast</span>
+            </button>
+            <div class="feed-status-badge">
+              <span class="badge-dot"></span>
+              <span id="feed-status-label">SerpAPI Powered</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Episode Creation Panel -->
+        <div id="episode-creation-panel" class="episode-creation-card" hidden role="region" aria-labelledby="creation-panel-title">
+          <div class="creation-panel-header">
+            <div class="creation-panel-icon-wrap">
+              <span class="creation-panel-icon">🎙️</span>
+            </div>
+            <div class="creation-panel-text">
+              <h3 id="creation-panel-title" class="creation-panel-title">Create Podcast Episode</h3>
+              <p class="creation-panel-desc">Bundle your selected verified news stories into a persistent episode in SQLite.</p>
+            </div>
+            <button type="button" id="btn-close-creation-panel" class="banner-close-btn" aria-label="Close episode creation">&times;</button>
+          </div>
+          
+          <div class="creation-form">
+            <div class="form-group">
+              <label for="episode-title-input" class="form-label">Episode Title <span class="required-star">*</span></label>
+              <input type="text" id="episode-title-input" class="form-input" placeholder="e.g. AI Advances & Global Tech Digest" maxlength="200" />
+            </div>
+            <div class="form-group">
+              <label for="episode-desc-input" class="form-label">Episode Description (Optional)</label>
+              <textarea id="episode-desc-input" class="form-textarea" placeholder="Brief summary or context of curated stories..." maxlength="1000" rows="2"></textarea>
+            </div>
+            
+            <div class="selected-sources-preview">
+              <span class="preview-label">Curated Sources:</span>
+              <span id="sources-count-badge" class="sources-badge">0 articles</span>
+            </div>
+
+            <!-- Creation Status Feedback Banner -->
+            <div id="episode-creation-status" class="creation-status-box" hidden aria-live="polite">
+              <span id="episode-creation-status-text"></span>
+            </div>
+
+            <div class="creation-actions">
+              <button type="button" id="btn-submit-episode" class="btn btn-primary">
+                <span>Create Episode</span>
+              </button>
+              <button type="button" id="btn-cancel-episode" class="btn btn-secondary">
+                <span>Cancel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- News Loading State -->
+        <div id="news-loading-state" class="news-loading-card" hidden style="display: none;" role="status" aria-live="polite">
+          <div class="loading-spinner-ring"></div>
+          <div class="loading-text-wrapper">
+            <h3 class="loading-title">Retrieving Live News Headlines...</h3>
+            <p class="loading-desc">Ingesting publisher-verified articles via SerpAPI search service</p>
+          </div>
+        </div>
+
+        <!-- News Error State -->
+        <div id="news-error-state" class="news-error-card" hidden style="display: none;" role="alert" aria-live="assertive">
+          <div class="error-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <div class="error-content">
+            <h3 id="news-error-title" class="error-title">News Search Unavailable</h3>
+            <p id="news-error-message" class="error-message">An error occurred while fetching news.</p>
+          </div>
+          <button type="button" id="news-error-retry-btn" class="btn btn-secondary btn-sm" hidden>Retry Search</button>
+        </div>
+
+        <!-- News Empty State -->
+        <div class="empty-state-card" id="news-empty-state">
+          <div class="empty-state-graphic">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path>
+              <path d="M18 14h-8"></path>
+              <path d="M15 18h-5"></path>
+              <path d="M10 6h8v4h-8V6Z"></path>
+            </svg>
+          </div>
+          <h3 class="empty-title">Search for a topic or choose a featured category above.</h3>
+          <p class="empty-desc">
+            Explore verified live articles from major publishers. No fabricated news items — each story links directly to its source.
+          </p>
+          <div class="empty-tags">
+            <span class="empty-pill">Live SerpAPI Ingestion</span>
+            <span class="empty-pill">Verified Web Articles</span>
+            <span class="empty-pill">Direct Publisher Sources</span>
+          </div>
+        </div>
+
+        <!-- Real News Results Grid -->
+        <div id="news-results-grid" class="news-results-grid" hidden style="display: none;"></div>
+      </section>
+
+      <!-- 6. PODCAST AUDIO STUDIO SECTION (Step 4 of workflow) -->
+      <section class="section podcast-section" id="podcast-preview">
+        <div class="section-header">
+          <span class="section-tag">Step 4: Synchronized Audio Studio</span>
+          <h2 class="section-title">Podcast Audio Studio</h2>
+          <p class="section-desc">Multi-speaker conversational dialogue synthesis featuring alternating Host &amp; CoHost voices, interactive playback scrubber, and multi-accent speech.</p>
+        </div>
+
+        <div class="podcast-player-card unified-studio-card" id="podcast-studio-viewer">
+          <!-- Hidden fallback anchors for backward compatibility -->
+          <span id="studio-viewer-title" style="display:none;"></span>
+          <span id="studio-viewer-meta" style="display:none;"></span>
+          <button type="button" id="btn-close-studio-viewer" style="display:none;" aria-hidden="true"></button>
+
+          <!-- Studio Header & Selected Episode Info -->
+          <div class="player-top">
+            <div class="podcast-avatar">
+              <span class="mic-emoji" role="img" aria-label="Microphone">🎙️</span>
+            </div>
+            <div class="player-info">
+              <div class="player-status-row">
+                <span class="player-badge" id="player-badge">Neural Audio Studio</span>
+                <span class="player-phase" id="player-phase-badge">Ready to Play</span>
+                <span class="audio-lang-pill" id="studio-active-track-pill">ENGLISH</span>
+              </div>
+              <h3 class="player-heading" id="player-heading">Select an Episode to Play</h3>
+              <p class="player-subheading" id="player-subheading">Choose an episode from Saved Episodes below or create a new one from Discover News.</p>
+            </div>
+          </div>
+
+          <!-- Studio Toolbar: Target Language & Generation Actions -->
+          <div class="audio-generation-panel">
+            <div class="audio-controls-row">
+              <div class="audio-control-group">
+                <div class="audio-control-label-row">
+                  <label for="audio-language-select" class="audio-control-label">Voice Accent / Language:</label>
+                  <span class="audio-engine-hint" id="audio-engine-hint">Neural Indic &amp; Edge TTS</span>
+                </div>
+                <select id="audio-language-select" class="audio-lang-select" aria-label="Select podcast language">
+                  <option value="english" selected>English (UK &amp; Indian Neural Accents)</option>
+                  <option value="hindi">Hindi (Microsoft Edge Neural – Madhur &amp; Swara)</option>
+                  <option value="hinglish">Hinglish (Bilingual Dual-Speaker)</option>
+                  <option value="odia">Odia (ଓଡ଼ିଆ – Sarvam AI Bulbul Neural Indic TTS)</option>
+                </select>
+
+                <!-- Interactive Language Segmented Quick Selector -->
+                <div class="studio-lang-pills" id="studio-lang-pills" role="radiogroup" aria-label="Quick language selector">
+                  <button type="button" class="lang-pill-btn active" data-lang="english" role="radio" aria-checked="true" title="Switch to English track">
+                    <span class="lang-pill-flag">🇬🇧</span>
+                    <span class="lang-pill-name">English</span>
+                    <span class="lang-pill-status" data-status-for="english">Ready</span>
+                  </button>
+                  <button type="button" class="lang-pill-btn" data-lang="hindi" role="radio" aria-checked="false" title="Switch to Hindi track">
+                    <span class="lang-pill-flag">🇮🇳</span>
+                    <span class="lang-pill-name">Hindi (हिंदी)</span>
+                    <span class="lang-pill-status" data-status-for="hindi">--</span>
+                  </button>
+                  <button type="button" class="lang-pill-btn" data-lang="hinglish" role="radio" aria-checked="false" title="Switch to Hinglish track">
+                    <span class="lang-pill-flag">🇮🇳</span>
+                    <span class="lang-pill-name">Hinglish</span>
+                    <span class="lang-pill-status" data-status-for="hinglish">--</span>
+                  </button>
+                  <button type="button" class="lang-pill-btn" data-lang="odia" role="radio" aria-checked="false" title="Switch to Odia track">
+                    <span class="lang-pill-flag">🇮🇳</span>
+                    <span class="lang-pill-name">Odia (ଓଡ଼ିଆ)</span>
+                    <span class="lang-pill-status" data-status-for="odia">Ready</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="audio-control-actions">
+                <button type="button" id="btn-generate-audio" class="btn btn-primary" title="Synthesize multi-speaker podcast audio">
+                  <span class="btn-icon">🔊</span>
+                  <span id="btn-generate-audio-text">Generate Podcast Audio</span>
+                </button>
+                <button type="button" id="btn-generate-script-in-studio" class="btn btn-secondary btn-sm" title="Generate or regenerate two-speaker dialogue script">
+                  <span>📜</span>
+                  <span id="btn-generate-script-text">Regenerate Script</span>
+                </button>
+                <button type="button" id="btn-download-audio" class="btn btn-secondary btn-sm" title="Download active language podcast track as MP3">
+                  <span>⬇️</span>
+                  <span>Download MP3</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Audio Status & Message Banner -->
+            <div id="audio-status-banner" class="audio-status-banner" hidden>
+              <div class="audio-status-icon" id="audio-status-icon">⏳</div>
+              <div class="audio-status-content">
+                <h5 id="audio-status-title" class="audio-status-title">Generating Audio...</h5>
+                <p id="audio-status-msg" class="audio-status-msg">Synthesizing Host and CoHost dialogue in selected language.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Waveform Visualizer -->
+          <div class="waveform-container" aria-hidden="true" title="Dynamic Acoustic Waveform Visualizer">
+            <div class="waveform-bars">
+              <span class="bar" style="height: 25%;"></span>
+              <span class="bar" style="height: 45%;"></span>
+              <span class="bar" style="height: 70%;"></span>
+              <span class="bar" style="height: 35%;"></span>
+              <span class="bar" style="height: 85%;"></span>
+              <span class="bar" style="height: 60%;"></span>
+              <span class="bar" style="height: 95%;"></span>
+              <span class="bar" style="height: 50%;"></span>
+              <span class="bar" style="height: 80%;"></span>
+              <span class="bar" style="height: 40%;"></span>
+              <span class="bar" style="height: 90%;"></span>
+              <span class="bar" style="height: 65%;"></span>
+              <span class="bar" style="height: 75%;"></span>
+              <span class="bar" style="height: 30%;"></span>
+              <span class="bar" style="height: 85%;"></span>
+              <span class="bar" style="height: 100%;"></span>
+              <span class="bar" style="height: 70%;"></span>
+              <span class="bar" style="height: 45%;"></span>
+              <span class="bar" style="height: 90%;"></span>
+              <span class="bar" style="height: 55%;"></span>
+              <span class="bar" style="height: 80%;"></span>
+              <span class="bar" style="height: 40%;"></span>
+              <span class="bar" style="height: 65%;"></span>
+              <span class="bar" style="height: 85%;"></span>
+              <span class="bar" style="height: 50%;"></span>
+              <span class="bar" style="height: 75%;"></span>
+              <span class="bar" style="height: 35%;"></span>
+              <span class="bar" style="height: 20%;"></span>
+            </div>
+          </div>
+
+          <!-- Player Controls (Scrubber & Transport) -->
+          <div class="player-controls">
+            <!-- Time Track -->
+            <div class="player-progress-bar" id="main-progress-bar" role="slider" aria-label="Podcast playback progress" tabindex="0">
+              <div class="progress-fill" id="main-progress-fill" style="width: 0%;"></div>
+            </div>
+            <div class="player-time-row">
+              <span class="time-text" id="main-time-current">00:00</span>
+              <span class="player-keyboard-hint">Keyboard: [Space] Play/Pause • [←/→] Seek 15s • [M] Mute</span>
+              <span class="time-text" id="main-time-duration">--:--</span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="control-actions">
+              <!-- Playback Speed Controls (Phase 2 Enhancement) -->
+              <div class="player-speed-selector" id="player-speed-selector" role="radiogroup" aria-label="Audio Playback Speed">
+                <span class="speed-selector-label">Speed</span>
+                <button type="button" class="speed-btn" data-speed="0.75" role="radio" aria-checked="false" title="Set playback speed to 0.75x">0.75x</button>
+                <button type="button" class="speed-btn active" data-speed="1.0" role="radio" aria-checked="true" title="Set playback speed to 1.0x (Normal)">1.0x</button>
+                <button type="button" class="speed-btn" data-speed="1.25" role="radio" aria-checked="false" title="Set playback speed to 1.25x">1.25x</button>
+                <button type="button" class="speed-btn" data-speed="1.5" role="radio" aria-checked="false" title="Set playback speed to 1.5x">1.5x</button>
+              </div>
+
+              <div class="transport-group">
+                <button type="button" class="ctrl-btn" id="main-rewind-btn" title="Rewind 15s (Left Arrow)" aria-label="Rewind 15 seconds">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"></path>
+                  </svg>
+                </button>
+
+                <button type="button" class="play-btn" id="main-play-btn" title="Play podcast (Spacebar)" aria-label="Play podcast">
+                  <svg class="icon-play" id="main-play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  <svg class="icon-pause" id="main-pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                    <rect x="6" y="4" width="4" height="16"></rect>
+                    <rect x="14" y="4" width="4" height="16"></rect>
+                  </svg>
+                </button>
+
+                <button type="button" class="ctrl-btn" id="main-forward-btn" title="Forward 15s (Right Arrow)" aria-label="Forward 15 seconds">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 17l5-5-5-5M6 17l5-5-5-5"></path>
+                  </svg>
+                </button>
+
+                <button type="button" class="player-speed-badge" id="main-speed-btn" title="Toggle playback speed (0.75x, 1.0x, 1.25x, 1.5x)">1.0x</button>
+              </div>
+
+              <!-- Volume Control -->
+              <div class="player-volume-wrapper" title="Audio Volume">
+                <button type="button" class="ctrl-btn volume-btn" id="main-volume-btn" aria-label="Mute or unmute volume (M)">
+                  <svg id="volume-icon-high" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                  <svg id="volume-icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                </button>
+                <input type="range" id="main-volume-slider" class="volume-slider" min="0" max="1" step="0.05" value="1" aria-label="Volume level" />
+              </div>
+            </div>
+          </div>
+
+          <!-- HTML Audio Player Section (Inside Studio) -->
+          <div id="audio-player-container" class="audio-player-container" hidden>
+            <div class="audio-player-meta-row">
+              <span class="audio-meta-item">
+                <span class="meta-label">Active Track:</span>
+                <strong id="audio-player-language" class="audio-lang-badge">ENGLISH</strong>
+              </span>
+              <span class="audio-meta-item">
+                <span class="meta-label">Generated:</span>
+                <span id="audio-player-timestamp">--</span>
+              </span>
+              <span class="audio-meta-item">
+                <span class="meta-label">Duration:</span>
+                <span id="audio-player-duration">--</span>
+              </span>
+            </div>
+
+            <div class="html-audio-player-wrapper">
+              <audio id="html-podcast-audio" class="html-podcast-audio" controls preload="auto">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          </div>
+
+          <!-- Dialogue Script Viewer -->
+          <div class="script-dialogue-section">
+            <div class="script-section-header-row">
+              <h4 class="script-section-heading"><span>📜</span> Script Dialogue (Host &amp; CoHost Turns)</h4>
+              <button type="button" id="btn-copy-script" class="btn btn-secondary btn-sm" title="Copy complete dialogue script to clipboard">
+                <span>📋</span>
+                <span id="btn-copy-script-text">Copy Script</span>
+              </button>
+            </div>
+            <div id="script-dialogue-container" class="script-dialogue-container">
+              <!-- Dialogue bubbles rendered here -->
+            </div>
+          </div>
+
+          <!-- Bottom Notice -->
+          <div class="player-footer-note">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span id="main-player-note">Dual-host neural conversation powered by Google Gemini and Speech Synthesis.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. STORED EPISODES LIBRARY SECTION (Step 5 of workflow) -->
+      <section class="section library-section" id="episodes-library">
+        <div class="episodes-library-card">
+          <div class="library-header">
+            <div>
+              <span class="library-tag">Step 5: Persistent Storage</span>
+              <h3 class="library-title">Saved Podcast Episodes</h3>
+              <p class="library-desc">Episodes stored in your local SQLite relational database with full AI scripts and generated audio files.</p>
+            </div>
+            <button type="button" id="btn-refresh-episodes" class="btn btn-secondary btn-sm" title="Refresh stored episodes from database">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+              </svg>
+              <span>Refresh Episodes</span>
+            </button>
+          </div>
+
+          <!-- Saved Episodes Search & Filter Toolbar (Phase 2 Enhancement) -->
+          <div class="episodes-filter-toolbar" id="episodes-filter-toolbar">
+            <div class="episodes-search-wrapper">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="episodes-search-input" class="episodes-search-input" placeholder="Search saved episodes by title..." aria-label="Search saved episodes by title" />
+              <button type="button" id="btn-clear-search-text" class="btn-clear-search" title="Clear search text" aria-label="Clear search" style="display: none;">&times;</button>
+            </div>
+
+            <div class="episodes-filter-controls">
+              <div class="filter-select-group">
+                <label for="episodes-filter-language" class="filter-label">Language:</label>
+                <select id="episodes-filter-language" class="filter-select" aria-label="Filter episodes by language">
+                  <option value="all">All Languages</option>
+                  <option value="english">English</option>
+                  <option value="hindi">Hindi</option>
+                  <option value="hinglish">Hinglish</option>
+                  <option value="odia">Odia</option>
+                </select>
+              </div>
+
+              <div class="filter-select-group">
+                <label for="episodes-filter-status" class="filter-label">Readiness:</label>
+                <select id="episodes-filter-status" class="filter-select" aria-label="Filter episodes by readiness">
+                  <option value="all">All Episodes</option>
+                  <option value="audio_ready">Audio Ready</option>
+                  <option value="ai_ready">AI Insights Ready</option>
+                  <option value="script_ready">Script Ready</option>
+                </select>
+              </div>
+
+              <button type="button" id="btn-clear-filters" class="btn btn-secondary btn-sm btn-clear-filters" title="Reset all search queries and filters">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                <span>Clear Filters</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Active Filter Results Summary -->
+          <div class="episodes-filter-summary" id="episodes-filter-summary" style="display: none;">
+            <span id="episodes-filter-count-text" class="filter-count-text"></span>
+          </div>
+
+          <!-- Episodes List Container -->
+          <div id="episodes-list-container" class="episodes-list-container">
+            <div class="episodes-empty-state" id="episodes-empty-state">
+              <div class="empty-icon">📁</div>
+              <p class="empty-msg">No podcast episodes created yet.</p>
+              <span class="empty-hint">Select news articles above and click "Create Podcast" to start your first episode.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. AI INTELLIGENCE VIEWER CARD (Step 3: Grounded Gemini Insights) -->
+      <div class="ai-intelligence-viewer-card" id="ai-intelligence-viewer" hidden role="region" aria-labelledby="ai-viewer-title">
+        <div class="ai-viewer-header">
+          <div class="ai-viewer-title-group">
+            <span class="pill-badge"><span class="badge-sparkle">✨</span> Grounded AI Intelligence</span>
+            <h3 id="ai-viewer-title" class="ai-viewer-title">Episode Insights</h3>
+            <p id="ai-viewer-meta" class="ai-viewer-meta">Synthesized strictly from supplied news sources via Google Gemini</p>
+          </div>
+          <button type="button" id="btn-close-ai-viewer" class="banner-close-btn" aria-label="Close AI Insights">&times;</button>
+        </div>
+
+        <div class="ai-viewer-body">
+          <!-- 1. AI Overview -->
+          <div class="ai-insight-block">
+            <h4 class="ai-block-heading"><span class="ai-block-icon">📝</span> AI Overview</h4>
+            <p id="ai-overview-text" class="ai-overview-text"></p>
+          </div>
+
+          <!-- 2. Key Points -->
+          <div class="ai-insight-block">
+            <h4 class="ai-block-heading"><span class="ai-block-icon">💡</span> Key Takeaways</h4>
+            <ul id="ai-key-points-list" class="ai-points-list"></ul>
+          </div>
+
+          <!-- 3. Important Facts -->
+          <div class="ai-insight-block">
+            <h4 class="ai-block-heading"><span class="ai-block-icon">📌</span> Important Facts</h4>
+            <ul id="ai-facts-list" class="ai-points-list"></ul>
+          </div>
+
+          <!-- 4. Topics & Entities Row -->
+          <div class="ai-meta-grid">
+            <div class="ai-meta-col">
+              <h4 class="ai-block-heading"><span class="ai-block-icon">🏷️</span> Topics</h4>
+              <div id="ai-topics-chips" class="ai-chips-group"></div>
+            </div>
+            <div class="ai-meta-col">
+              <h4 class="ai-block-heading"><span class="ai-block-icon">🏢</span> Identified Entities</h4>
+              <div id="ai-entities-chips" class="ai-chips-group"></div>
+            </div>
+          </div>
+
+          <!-- 5. Source Insights -->
+          <div class="ai-insight-block">
+            <h4 class="ai-block-heading"><span class="ai-block-icon">🔍</span> Source-Level Insights &amp; Claims</h4>
+            <div id="ai-sources-insights-container" class="ai-source-cards-list"></div>
+          </div>
+
+          <!-- 6. Confidence & Limitations -->
+          <div class="ai-footer-notes">
+            <div class="ai-confidence-pill-row">
+              <span class="ai-conf-label">Factual Grounding Confidence:</span>
+              <span id="ai-confidence-pill" class="ai-conf-badge">Medium</span>
+            </div>
+            <div class="ai-limitations-box">
+              <span class="ai-lim-label">Grounding Scope &amp; Boundaries:</span>
+              <ul id="ai-limitations-list" class="ai-limitations-list"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. MAJOR PROJECT OVERVIEW & ARCHITECTURE (#about) -->
+      <section class="section about-section" id="about">
+        <div class="about-card">
+          <div class="about-header">
+            <span class="section-tag">Academic Major Project</span>
+            <h2 class="about-title">Podcast Buddy — System Architecture</h2>
+            <p class="about-tagline">
+              An enterprise-grade, full-stack AI audio assistant transforming live global news reporting into grounded, conversational multi-speaker podcasts.
+            </p>
+          </div>
+
+          <!-- 4 Core Pillars Grid -->
+          <div class="about-grid">
+            <div class="about-feature-box">
+              <span class="about-feature-icon">🔍</span>
+              <h3 class="about-feature-title">Live News Aggregation</h3>
+              <p class="about-feature-desc">
+                SerpAPI integration fetching real-time verified articles, with keyword filtering, categories, and direct publisher traceability.
+              </p>
+            </div>
+
+            <div class="about-feature-box">
+              <span class="about-feature-icon">🧠</span>
+              <h3 class="about-feature-title">Grounded AI Intelligence</h3>
+              <p class="about-feature-desc">
+                Google Gemini extracts structured overviews, key takeaways, named entities, and confidence scores strictly from verified source snippets.
+              </p>
+            </div>
+
+            <div class="about-feature-box">
+              <span class="about-feature-icon">🎙️</span>
+              <h3 class="about-feature-title">Two-Speaker Dialogue Scripting</h3>
+              <p class="about-feature-desc">
+                Automated conversational scripting between Host and CoHost, organizing news digests into introductions, thematic story segments, and outro recaps.
+              </p>
+            </div>
+
+            <div class="about-feature-box">
+              <span class="about-feature-icon">🔊</span>
+              <h3 class="about-feature-title">Regional Neural Speech Synthesis</h3>
+              <p class="about-feature-desc">
+                High-fidelity dual-speaker neural speech across Odia (Sarvam AI Bulbul v3), Hindi (Edge Neural Madhur &amp; Swara), Hinglish, and English (Guy &amp; Jenny) with 250ms conversational pauses and loudness normalization.
+              </p>
+            </div>
+          </div>
+
+          <!-- Architecture & Security Highlights -->
+          <div class="about-architecture-bar">
+            <div>
+              <strong>Full-Stack Architecture:</strong> Python 3.14 Flask REST API • SQLite 3 Relational DB • Pure Semantic Vanilla CSS &amp; JavaScript
+            </div>
+            <div class="about-tech-stack">
+              <span class="tech-chip">Python 3.14</span>
+              <span class="tech-chip">Flask REST API</span>
+              <span class="tech-chip">SQLite 3 Relational DB</span>
+              <span class="tech-chip">SerpAPI (Google News)</span>
+              <span class="tech-chip">Google Gemini AI</span>
+              <span class="tech-chip">Sarvam AI Bulbul v3 (Odia)</span>
+              <span class="tech-chip">Edge Neural TTS (Hindi/English)</span>
+              <span class="tech-chip">PyDub &amp; Miniaudio</span>
+            </div>
+          </div>
+
+          <!-- Developer Diagnostics Panel (Collapsible - Requirement 3) -->
+          <div id="developer-diagnostics" class="developer-diagnostics-section">
+            <details class="diagnostics-details">
+              <summary class="diagnostics-summary">
+                <div class="summary-left">
+                  <span class="terminal-badge">⚡ DEVELOPER CONSOLE</span>
+                  <span class="summary-title">Backend Connectivity &amp; REST API Monitor</span>
+                </div>
+                <div class="summary-right">
+                  <span id="diag-backend-status-badge" class="diag-status-pill status-pending">Checking...</span>
+                  <span class="summary-toggle-hint">Click to expand / collapse</span>
+                </div>
+              </summary>
+              <div class="diagnostics-content">
+                <div class="diagnostics-card-inner">
+                  <div class="diagnostics-header-row">
+                    <div>
+                      <strong class="diag-title">Flask Server Endpoints</strong>
+                      <p class="diag-desc">Direct real-time communication with local Python Flask endpoints on port 5000.</p>
+                    </div>
+                    <div class="diagnostics-buttons">
+                      <button type="button" id="btn-check-health" class="btn btn-secondary btn-sm">
+                        Ping /health
+                      </button>
+                      <button type="button" id="btn-check-root" class="btn btn-secondary btn-sm">
+                        Ping / (Root)
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="endpoints-summary-grid">
+                    <div class="endpoint-pill">
+                      <span class="method-tag get">GET</span>
+                      <code>/health</code>
+                      <span class="endpoint-role">Health Check</span>
+                    </div>
+                    <div class="endpoint-pill">
+                      <span class="method-tag get">GET</span>
+                      <code>/api/news/search</code>
+                      <span class="endpoint-role">SerpAPI Ingestion</span>
+                    </div>
+                    <div class="endpoint-pill">
+                      <span class="method-tag post">POST</span>
+                      <code>/api/episodes</code>
+                      <span class="endpoint-role">SQLite Persistence</span>
+                    </div>
+                    <div class="endpoint-pill">
+                      <span class="method-tag post">POST</span>
+                      <code>/api/episodes/:id/generate-audio</code>
+                      <span class="endpoint-role">Neural Audio Studio</span>
+                    </div>
+                  </div>
+
+                  <div class="api-console-wrapper">
+                    <div class="console-header">
+                      <span class="console-title">Flask Response Monitor</span>
+                      <span id="api-timestamp" class="console-timestamp">Active</span>
+                    </div>
+                    <pre id="api-output-box" class="console-body"><code>{ "status": "connecting", "message": "Checking Flask server..." }</code></pre>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 8. FOOTER -->
+    <footer class="app-footer">
+      <div class="footer-container">
+        <div class="footer-brand-col">
+          <div class="footer-logo">
+            <div class="logo-wrapper sm">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+            </div>
+            <span class="footer-brand-title">Podcast Buddy</span>
+          </div>
+          <p class="footer-tagline">AI-Powered Podcast &amp; News Discovery Assistant</p>
+          <span class="footer-badge">Final-Year B.Tech Major Project</span>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#how-it-works">5-Step Workflow</a></li>
+            <li><a href="#news-results">Discover News</a></li>
+            <li><a href="#episodes-library">Saved Episodes</a></li>
+            <li><a href="#podcast-preview">Audio Studio</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title">System &amp; Verification</h4>
+          <ul class="footer-nav-list">
+            <li><a href="/health" target="_blank" rel="noopener">Health Endpoint (/health)</a></li>
+            <li><a href="/" target="_blank" rel="noopener">Root API JSON (/)</a></li>
+            <li><span class="footer-chip">SQLite 3 Relational DB</span></li>
+            <li><span class="footer-chip">Zero Secrets Client-Side</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>Podcast Buddy &copy; 2026. Built with Python Flask, Vanilla JS &amp; Modern Semantic CSS.</p>
+        <p class="footer-subtext">All API keys remain securely on the server. Zero client-side key leakage.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Vanilla JavaScript -->
+  <script src="/static/js/app.js?v=20261029_portfolio"></script>
+</body>
+</html>
