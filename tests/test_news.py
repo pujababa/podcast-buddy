@@ -34,12 +34,10 @@ class TestNewsDiscovery(unittest.TestCase):
     # 1 & 2: Root & Health Endpoints
     # -------------------------------------------------------------------------
     def test_root_endpoint(self):
-        """Verify GET / returns 200 and running status."""
+        """Verify GET / redirects to /app."""
         response = self.client.get("/")
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data.get("app"), "Podcast Buddy")
-        self.assertEqual(data.get("status"), "running")
+        self.assertIn(response.status_code, (301, 302))
+        self.assertEqual(response.headers.get("Location"), "/app")
 
     def test_health_endpoint(self):
         """Verify GET /health returns 200 and healthy status."""

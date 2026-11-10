@@ -15,13 +15,10 @@ class TestPodcastBuddy(unittest.TestCase):
         self.app.testing = True
 
     def test_root_endpoint(self):
-        """Test GET / returns 200 and running status."""
+        """Test GET / redirects to /app."""
         response = self.client.get("/")
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.is_json)
-        data = response.get_json()
-        self.assertEqual(data.get("app"), "Podcast Buddy")
-        self.assertEqual(data.get("status"), "running")
+        self.assertIn(response.status_code, (301, 302))
+        self.assertEqual(response.headers.get("Location"), "/app")
 
     def test_health_endpoint(self):
         """Test GET /health returns 200 and healthy status."""
@@ -29,6 +26,7 @@ class TestPodcastBuddy(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.is_json)
         data = response.get_json()
+        self.assertEqual(data.get("app"), "Podcast Buddy")
         self.assertEqual(data.get("status"), "healthy")
 
     def test_frontend_serving(self):

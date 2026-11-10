@@ -191,10 +191,8 @@ class TestAuditAndHardeningFixes(unittest.TestCase):
         self.assertEqual(data_health["status"], "healthy")
 
         res_root = self.client.get("/")
-        self.assertEqual(res_root.status_code, 200)
-        data_root = res_root.get_json()
-        self.assertEqual(data_root.get("app"), "Podcast Buddy")
-        self.assertEqual(data_root.get("status"), "running")
+        self.assertIn(res_root.status_code, (301, 302))
+        self.assertEqual(res_root.headers.get("Location"), "/app")
 
     def test_requested_odia_audio_returns_404_not_serving_other_language(self):
         """

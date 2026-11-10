@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, redirect
 from dotenv import load_dotenv
 
 # Load environment variables if .env file exists
@@ -41,18 +41,14 @@ def add_cors_headers(response):
 
 @app.route("/", methods=["GET"])
 def index():
-    """Root endpoint confirming that Podcast Buddy is running."""
-    return jsonify({
-        "app": "Podcast Buddy",
-        "status": "running",
-        "message": "Podcast Buddy is running",
-        "frontend_url": "/app"
-    }), 200
+    """Redirect root endpoint to the frontend application."""
+    return redirect("/app", code=302)
 
 @app.route("/health", methods=["GET"])
 def health():
     """Health check endpoint returning service status."""
     return jsonify({
+        "app": "Podcast Buddy",
         "status": "healthy"
     }), 200
 

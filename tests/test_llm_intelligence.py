@@ -337,11 +337,10 @@ class TestPhase5GeminiIntelligence(unittest.TestCase):
     # 6. Regression & Health Endpoint Tests
     # -------------------------------------------------------------------------
     def test_root_endpoint_persists(self):
-        """Verify GET / returns 200 running status."""
+        """Verify GET / redirects to /app."""
         response = self.client.get("/")
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data.get("status"), "running")
+        self.assertIn(response.status_code, (301, 302))
+        self.assertEqual(response.headers.get("Location"), "/app")
 
     def test_health_endpoint_persists(self):
         """Verify GET /health returns 200 healthy status."""

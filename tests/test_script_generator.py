@@ -476,9 +476,8 @@ class TestPodcastScriptGenerator(unittest.TestCase):
     def test_regression_root_and_health(self):
         """Verify Phase 1 root and health endpoints remain functional."""
         root_resp = self.client.get("/")
-        self.assertEqual(root_resp.status_code, 200)
-        root_data = root_resp.get_json()
-        self.assertEqual(root_data["status"], "running")
+        self.assertIn(root_resp.status_code, (301, 302))
+        self.assertEqual(root_resp.headers.get("Location"), "/app")
 
         health_resp = self.client.get("/health")
         self.assertEqual(health_resp.status_code, 200)

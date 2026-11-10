@@ -413,12 +413,10 @@ class TestPhase4DatabaseAndEpisodes(unittest.TestCase):
     # 8. Regression & Health Endpoint Tests
     # -------------------------------------------------------------------------
     def test_root_endpoint_persists(self):
-        """Verify GET / returns 200 with Podcast Buddy info."""
+        """Verify GET / redirects to /app."""
         response = self.client.get("/")
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data.get("app"), "Podcast Buddy")
-        self.assertEqual(data.get("status"), "running")
+        self.assertIn(response.status_code, (301, 302))
+        self.assertEqual(response.headers.get("Location"), "/app")
 
     def test_health_endpoint_persists(self):
         """Verify GET /health returns 200 and healthy status."""
